@@ -22,7 +22,6 @@ Mondrian::Mondrian(map<int,string> d,int kay) {
          data = d;
          for (std::map<int,string>::iterator it=data.begin(); it!=data.end(); ++it){
     }
-
 }
 
 void Mondrian::Anonymize(vector<vector <int> > R2data){
@@ -31,8 +30,6 @@ void Mondrian::Anonymize(vector<vector <int> > R2data){
     cout<< "\nDATA IS NULL\n";
         exit(0);
     }
-
-
      int max;
      int selectedRow;
      int median;
@@ -42,53 +39,39 @@ void Mondrian::Anonymize(vector<vector <int> > R2data){
      int Crow = 0;
      for(int i=0;i<R2data.size();i++){
         for(int j=0;j<R2data.at(i).size();j++){
-
             temple[R2data[i][j]];
-
         }
-
          if(max<temple.size()){
             max = temple.size();
             selectedRow = i;
          }
-
           temple.clear();
      }
-
      //-----------------------------------------------------------end of 1st step
-
      //---------------------------------------------------------2nd step : check the requirements,
      if(R2data[selectedRow].size() >= 2*k){
-
              R2data = BubbleSort(R2data,selectedRow);
-
              vector<vector<int> > temp1;
              vector<vector<int> > temp2;
-
+			 
              if(R2data[selectedRow].size()%2 == 0){  // Check if the number of the column is odd or even and separate
                                                      // to 2 data sets accordingly
                          for(int i=0;i<R2data.size();i++){
-
                            vector<int> tmp;
                            for(int j=0;j<R2data[i].size()/2;j++){
                                tmp.push_back(R2data[i][j]);
                            }
-
                            temp1.push_back(tmp) ;
                            tmp.clear();
-
-
+						   
                            for(int j=R2data[i].size()/2;j<R2data[i].size();j++){
                                tmp.push_back(R2data[i][j]);
                            }
                            temp2.push_back(tmp) ;
-
                         }
             }
             else{
-
                          for(int i=0;i<R2data.size();i++){
-
                            vector<int> tmp;
                            for(int j=0;j<(R2data[i].size()-1)/2;j++){
                                tmp.push_back(R2data[i][j]);
@@ -97,22 +80,14 @@ void Mondrian::Anonymize(vector<vector <int> > R2data){
                            temp1.push_back(tmp) ;
                            tmp.clear();
 
-
                            for(int j=(R2data[i].size()-1)/2;j<R2data[i].size();j++){
                                tmp.push_back(R2data[i][j]);
                            }
                            temp2.push_back(tmp) ;
-
-
                         }
-
             }
-
                 Anonymize(temp1);   //3rd step : the two new datasets are inserted into the Anonymize function recursively
                 Anonymize(temp2);
-
-
-
      }
      else{  //if the size of the columns isnt bigger than 2*k , then we group the elemnts of each column accodint to the min and the max
             // and print them to a file as anonymized.
@@ -127,20 +102,15 @@ void Mondrian::Anonymize(vector<vector <int> > R2data){
                 total_eq = total_eq+R2data[0].size();
 
                 for(int j=0;j<R2data[0].size();j++){
-
                           for(int i = 0;i<R2data.size();i++){
-
                              minf1 = minf(R2data[i]);
                              maxf1 = maxf(R2data[i]);
 
                            if(minf1 == maxf1){
-
                                    if(i!=R2data.size()-1){
                                        myfile<<minf1<<",";
-
                                        if(j==0)
                                            cout<<minf1<<",";
-
                                     }
                                     else{
                                         myfile<<minf1;
@@ -150,11 +120,10 @@ void Mondrian::Anonymize(vector<vector <int> > R2data){
                                     }
 
                            } else{
-
                                   if(i!=R2data.size()-1){
                                    myfile<<"["<<minf1<<":"<<maxf1<<"],";
 
-                                    if(j==0)
+                                  if(j==0)
                                      cout<<"["<<minf1<<":"<<maxf1<<"],";
                                    }
                                    else{
@@ -167,11 +136,8 @@ void Mondrian::Anonymize(vector<vector <int> > R2data){
                            }
                            myfile<<endl;
                            }
-
-
                      myfile.close();
            }
-
      }
 
 //finds the minimum element of a column
@@ -181,10 +147,7 @@ int Mondrian::minf(vector<int> tmp){
       if(tmp[i]<min)
         min = tmp[i];
     }
-
     return min;
-
-
 }
 
 void Mondrian::print_meanAverage(){
@@ -203,13 +166,10 @@ int Mondrian::maxf(vector<int> tmp){
         max = tmp[i];
         }
     }
-
     return max;
-
-
 }
 
-//Sorts the data of all columns according to the selected column(the one who has the most different elements
+//Sorts the data of all columns according to the selected column(the one who has the most different elements)
 vector< vector<int> > Mondrian::BubbleSort(vector<vector <int> > dt,int selectedRow)
 {
 
@@ -223,14 +183,12 @@ vector< vector<int> > Mondrian::BubbleSort(vector<vector <int> > dt,int selected
          {
                if (dt[selectedRow][j+1] > dt[selectedRow][j])      // ascending order simply changes to <
               {
-
                       for(int i = 0;i<dt.size();i++){
 
                           temp = dt[i][j];             // swap elements
                           dt[i][j] = dt[i][j+1];
                           dt[i][j+1] = temp;
                       }
-
                         flag = 1;               // indicates that a swap occurred.
                }
           }
@@ -238,19 +196,15 @@ vector< vector<int> > Mondrian::BubbleSort(vector<vector <int> > dt,int selected
      return dt;   //arrays are passed to functions by address; nothing is returned
 }
 
-
 vector<vector<int> > Mondrian::InitiateArrays() {
 		int sizeX = data.size();
 		int sizeY = 0;
-
 		string input;
 
                 for (std::map<int,string>::iterator it=data.begin(); it!=data.end(); ++it){
-
                         input = it->second;
                         break;
                  }
-
 		istringstream ss(input);
 		string token;
 		while (getline(ss, token, ',')) {
@@ -260,36 +214,29 @@ vector<vector<int> > Mondrian::InitiateArrays() {
 	     int i = 0;
 	     int j=0;
              for (map<int, string>::iterator it = data.begin(); it != data.end(); ++it) {
-
                 input = it->second;
-
                 istringstream os(input);
                 string temp;
 
                 j=0;
 		        while(getline(os,temp,',')){
 
-                if(i==0){
-                 vector <int> tmpdata; //----------------------------------------
-
-			     tmpdata.push_back(atoi(temp.c_str()));
-			     Rdata.push_back(tmpdata);
-
-			     j++;
-			     }
-			     else{
-                        Rdata[j].push_back(atoi(temp.c_str()));
-			     j++;
-
-
-			     }
+					if(i==0){
+					 vector <int> tmpdata; //----------------------------------------
+					 tmpdata.push_back(atoi(temp.c_str()));
+					 Rdata.push_back(tmpdata);
+					 j++;
+					 }
+					 else{
+							Rdata[j].push_back(atoi(temp.c_str()));
+					 j++;
+					 }
 		        }
-		          j=0;
+		        j=0;
 		        i++;
                }
 
 	      return Rdata;
-
 }
 
 
